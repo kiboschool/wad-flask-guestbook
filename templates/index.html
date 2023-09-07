@@ -4,9 +4,34 @@
     <title>Guestbook</title>
 </head>
 <body>
-    <h2>Guestbook Entries</h2>
-    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     
     <h2>Submit Your Entry</h2>
+    <form action="/" method="post">
+        <label>Name:</label>
+        <input type="text" name="name" required>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <label>Message:</label>
+        <textarea name="message" required></textarea>
+        <input type="submit" value="Submit">
+    </form>
+    
+    <h2>Guestbook Entries</h2>
+    <ul>
+        {% for guest in guests %}
+            <li>
+                <strong>Name:</strong> {{ guest[0] }} <br>
+                <strong>Email:</strong> {{ guest[1] }} <br>
+                <strong>Message:</strong> {{ guest[2] }} <br>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
