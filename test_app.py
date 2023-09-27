@@ -2,6 +2,7 @@
 import unittest
 import sqlite3
 from app import app, get_db
+from gradescope_utils.autograder_utils.decorators import weight
 
 class GuestbookTests(unittest.TestCase):
 
@@ -25,10 +26,12 @@ class GuestbookTests(unittest.TestCase):
             cur = conn.cursor()
             cur.execute("DROP TABLE guests")
 
+    @weight(1)
     def test_index_page(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+    @weight(1)
     def test_guest_entry(self):
         response = self.client.post('/', data={
             'name': 'John Doe',
